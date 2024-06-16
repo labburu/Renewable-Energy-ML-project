@@ -7,15 +7,6 @@ Tendril DAGs and tasks that run in Apache Airflow
 - [Deployment](#deployment)
 
 
-## Resources
-| Resource                | Link |
-|-------------------------|------|
-| Tendril Airflow Wiki    | https://simpleenergy.atlassian.net/wiki/spaces/PE/pages/838632225/Airflow |
-| Tendril Airflow Service | https://github.com/tendrilinc/docker-airflow |
-| Tendril Qubole          | https://github.com/tendrilinc/qubole |
-| Apache Airflow Project  | https://github.com/apache/airflow |
-| Apache Airflow Docs     | https://airflow.readthedocs.io/en/latest/ |
-
 
 ### Dependencies
 - Docker
