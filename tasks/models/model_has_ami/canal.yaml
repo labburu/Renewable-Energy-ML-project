@@ -1,0 +1,24 @@
+---
+
+info:
+  id: model_has_ami
+
+extract:
+  - id: ami
+    type: file
+    static: ami_daily_rollup
+    format: parquet
+  - id: channels
+    type: airflow
+    dag_id: soa_daily
+    task_id: transform_channels
+    format: parquet
+
+transform:
+  type: task
+  script: model_has_ami.py
+  task: model_has_ami.ModelHasAMI
+
+load:
+  type: file
+  format: parquet

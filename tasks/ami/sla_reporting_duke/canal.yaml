@@ -1,0 +1,22 @@
+---
+
+info:
+  id: sla_reporting_duke
+  owner: AMI-GOs
+  email: beerd@tendrilinc.com
+
+extract:
+  - id: qc_output
+    type: airflow
+    dag_id: dag_duke
+    task_id: ami_qc
+
+transform:
+  type: task
+  script: sla_reporting_duke.py
+  task: sla_reporting_duke.AmiSlaReportingDuke
+
+load:
+  type: file
+  format: parquet
+  repartition: 1

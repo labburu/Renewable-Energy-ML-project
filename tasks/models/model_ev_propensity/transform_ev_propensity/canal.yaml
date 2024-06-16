@@ -1,0 +1,31 @@
+---
+
+info:
+  id: transform_ev_propensity
+
+extract:
+  - id: experian
+    type: airflow
+    task_id: transform_match_demographics
+    dag_id: demographics_matching_v2
+    format: parquet
+  - id: location_profiles
+    type: airflow
+    task_id: transform_location_profiles_tabular
+    dag_id: tendril
+    format: parquet
+  - id: locations
+    type: airflow
+    dag_id: soa_daily
+    task_id: transform_locations
+    format: parquet
+
+transform:
+  type: task
+  script: task.py
+  task: task.TransformEVPropensity
+
+load:
+  type: file
+  format: parquet
+  repartition: 256

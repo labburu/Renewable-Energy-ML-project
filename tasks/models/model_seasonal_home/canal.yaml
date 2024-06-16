@@ -1,0 +1,26 @@
+---
+
+info:
+  id: model_seasonal_home
+  owner: BEE R&D
+  email: beerd@tendrilinc.com
+
+extract:
+  - id: bills
+    type: airflow
+    dag_id: soa_daily
+    task_id: transform_bills
+    format: parquet
+  - id: locations
+    type: airflow
+    dag_id: soa_daily
+    task_id: transform_locations
+    format: parquet
+
+transform:
+  type: script
+  script: script.py
+
+load:
+  type: file
+  format: parquet

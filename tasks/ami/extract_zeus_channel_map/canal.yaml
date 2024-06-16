@@ -1,0 +1,132 @@
+---
+
+info:
+  id: extract_zeus_channel_map
+  owner: AMI-GOs
+  email: beerd@tendrilinc.com
+
+extract:
+  - id: channel_map_duke
+    type: postgres
+    database: zeus
+    table: "(
+      SELECT
+      ltrim(l.externalresidenceidentifier, '0') AS external_location_id,
+      ltrim(aep.value, '0')                     AS external_account_id,
+      ltrim(c.externalid, '0')                  AS external_channel_id,
+      CASE
+        WHEN c.direction = 'RECEIVED' THEN 'R'
+        WHEN c.direction = 'DELIVERED' THEN 'D'
+      ELSE 'N'
+      END                                       AS direction,
+      aep.accountid                             AS account_uuid,
+      l.id                                      AS location_uuid,
+      c.id                                      AS channel_uuid
+    FROM public.locations l
+    JOIN public.account_extended_properties aep
+      ON l.accountid = aep.accountid
+    JOIN public.channels c
+      ON l.id = c.locationid
+    WHERE aep.name = 'DukeInternalId' ) as channel_map_duke"
+
+  - id: channel_map_aep
+    type: postgres
+    database: zeus
+    table: "(
+      SELECT
+      l.externalresidenceidentifier               AS external_location_id,
+      a.externalaccountid                         AS external_account_id,
+      c.externalid                                AS external_channel_id,
+      CASE
+        WHEN c.direction = 'RECEIVED' THEN 'R'
+        WHEN c.direction = 'DELIVERED' THEN 'D'
+        ELSE 'N'
+        END                                       AS direction,
+      a.id                                        AS account_uuid,
+      l.id                                        AS location_uuid,
+      c.id                                        AS channel_uuid
+      FROM public.locations l
+      JOIN public.accounts a
+        ON l.accountid = a.id
+      JOIN public.channels c
+        ON l.id = c.locationid
+      WHERE a.tenantid = 12) as channel_map_aep"
+
+  - id: channel_map_psegli
+    type: postgres
+    database: zeus
+    table: "(
+      SELECT
+      l.externalresidenceidentifier               AS external_location_id,
+      a.externalaccountid                         AS external_account_id,
+      c.externalid                                AS external_channel_id,
+      CASE
+        WHEN c.direction = 'RECEIVED' THEN 'R'
+        WHEN c.direction = 'DELIVERED' THEN 'D'
+        ELSE 'N'
+        END                                       AS direction,
+      a.id                                        AS account_uuid,
+      l.id                                        AS location_uuid,
+      c.id                                        AS channel_uuid
+      FROM public.locations l
+      JOIN public.accounts a
+        ON l.accountid = a.id
+      JOIN public.channels c
+        ON l.id = c.locationid
+      WHERE a.tenantid = 79) as channel_map_psegli"
+
+  - id: channel_map_alabama
+    type: postgres
+    database: zeus
+    table: "(
+      SELECT
+      l.externalresidenceidentifier               AS external_location_id,
+      a.externalaccountid                         AS external_account_id,
+      c.externalid                                AS external_channel_id,
+      CASE
+        WHEN c.direction = 'RECEIVED' THEN 'R'
+        WHEN c.direction = 'DELIVERED' THEN 'D'
+        ELSE 'N'
+        END                                       AS direction,
+      a.id                                        AS account_uuid,
+      l.id                                        AS location_uuid,
+      c.id                                        AS channel_uuid
+      FROM public.locations l
+      JOIN public.accounts a
+        ON l.accountid = a.id
+      JOIN public.channels c
+        ON l.id = c.locationid
+      WHERE a.tenantid = 109) as channel_map_alabama"
+
+  - id: channel_map_alliant
+    type: postgres
+    database: zeus
+    table: "(
+      SELECT
+      l.externalresidenceidentifier               AS external_location_id,
+      a.externalaccountid                         AS external_account_id,
+      c.externalid                                AS external_channel_id,
+      CASE
+        WHEN c.direction = 'RECEIVED' THEN 'R'
+        WHEN c.direction = 'DELIVERED' THEN 'D'
+        ELSE 'N'
+        END                                       AS direction,
+      a.id                                        AS account_uuid,
+      l.id                                        AS location_uuid,
+      c.id                                        AS channel_uuid
+      FROM public.locations l
+      JOIN public.accounts a
+        ON l.accountid = a.id
+      JOIN public.channels c
+        ON l.id = c.locationid
+      WHERE a.tenantid = 41) as channel_map_alliant"
+
+transform:
+  type: task
+  task: extract_zeus_channel_map.ZeusChannelMap
+  script: extract_zeus_channel_map.py
+
+load:
+  type: file
+  format: parquet
+repartition: 32

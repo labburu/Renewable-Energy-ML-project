@@ -1,0 +1,31 @@
+---
+
+info:
+  id: model_smart_thermostat_v2
+
+extract:
+  - id: marketplace_data
+    type: file
+    static: smart_thermostat_marketplace_experian
+    format: parquet
+  - id: experian
+    type: airflow
+    dag_id: demographics_matching_v2
+    task_id: transform_match_demographics
+    format: parquet
+  - id: locs
+    type: airflow
+    dag_id: soa_daily
+    task_id: transform_locations
+    format: parquet
+
+transform:
+  type: task
+  task: task.ModelSmartThermostatV2
+  script: task.py
+  report:
+    type: datadog
+
+load:
+  type: file
+  format: parquet

@@ -1,0 +1,46 @@
+---
+
+info:
+  id: generate_training_set
+
+extract:
+  - id: features_11
+    type: airflow
+    dag_id: model_ev_detection
+    task_id: extract_features_11
+    format: parquet
+  - id: features_12
+    type: airflow
+    dag_id: model_ev_detection
+    task_id: extract_features_12
+    format: parquet
+  - id: features_79
+    type: airflow
+    dag_id: model_ev_detection
+    task_id: extract_features_79
+    format: parquet
+  - id: features_109
+    type: airflow
+    dag_id: model_ev_detection
+    task_id: extract_features_109
+    format: parquet
+  - id: channels
+    type: airflow
+    dag_id: soa_daily
+    task_id: transform_channels
+    format: parquet
+  - id: location_profiles_tabular
+    type: airflow
+    dag_id: tendril
+    task_id: transform_location_profiles_tabular
+    format: parquet
+
+
+transform:
+  type: task
+  script: generate_training_set.py
+  task: generate_training_set.GenerateTrainingSet
+
+load:
+  type: file
+  format: parquet

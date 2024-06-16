@@ -1,0 +1,25 @@
+---
+
+info:
+  id: extract_ami_psegli
+
+# Note: The pipe 'sep' option in the extract block is really important.
+# The data are set up as comma-separated fields, BUT the different rows have
+# a different number of columns, so spark will truncate the number of columns
+# down to a "common" set. In order to avoid that, I intentionally set it to
+# the wrong delimiter so that everything is preserved.
+extract:
+  - id: ami
+    type: file
+    format: csv
+    options:
+      sep: '|'
+
+transform:
+  type: task
+  task: extract_ami_psegli.ExtractAmiPsegli
+  script: extract_ami_psegli.py
+
+load:
+  type: file
+  format: parquet

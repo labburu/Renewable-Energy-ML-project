@@ -1,0 +1,24 @@
+---
+
+info:
+  id: model_ami_fill_rate
+
+extract:
+  - id: ami
+    type: file
+    static: ami_daily_rollup
+    format: parquet
+  - id: channels
+    type: airflow
+    dag_id: soa_daily
+    task_id: transform_channels
+    format: parquet
+
+transform:
+  type: task
+  script: model_ami_fill_rate.py
+  task: model_ami_fill_rate.ModelAMIFillRate
+
+load:
+  type: file
+  format: parquet

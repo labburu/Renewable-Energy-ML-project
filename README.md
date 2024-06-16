@@ -7,6 +7,14 @@ Tendril DAGs and tasks that run in Apache Airflow
 - [Deployment](#deployment)
 
 
+## Resources
+| Resource                | Link |
+|-------------------------|------|
+| Tendril Airflow Wiki    | https://simpleenergy.atlassian.net/wiki/spaces/PE/pages/838632225/Airflow |
+| Tendril Airflow Service | https://github.com/tendrilinc/docker-airflow |
+| Tendril Qubole          | https://github.com/tendrilinc/qubole |
+| Apache Airflow Project  | https://github.com/apache/airflow |
+| Apache Airflow Docs     | https://airflow.readthedocs.io/en/latest/ |
 
 
 ### Dependencies
@@ -18,7 +26,7 @@ Tendril DAGs and tasks that run in Apache Airflow
 ## Development
 It is highly recommended to leverage Python management tools to setup your
 development environment.
- 
+  - See [How to pyenv](https://wiki.tendrilinc.com/display/ENG/How-To+pyenv)
 
 To run airflow locally, see
 [local development](https://github.com/tendrilinc/docker-airflow#development).

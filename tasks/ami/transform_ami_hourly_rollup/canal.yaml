@@ -1,0 +1,20 @@
+---
+
+info:
+  id: transform_ami_hourly_rollup
+  owner: BEE RD Team
+  email: beerd@tendrilinc.com
+
+# Tenant-specific extract must be set in dag
+extract: []
+
+transform:
+  type: task
+  script: transform_ami_hourly_rollup.py
+  task: transform_ami_hourly_rollup.Transform
+
+# Output is metadata of dates processed
+load:
+  type: file
+  format: parquet
+  repartition: 1

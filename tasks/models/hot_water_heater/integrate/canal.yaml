@@ -1,0 +1,35 @@
+---
+
+info:
+  id: hot_water_heater
+
+extract:
+  - id: wh_results_11
+    type: airflow
+    dag_id: model_hot_water_heater_detection
+    task_id: hot_water_heater_11
+    format: parquet
+  - id: wh_results_12
+    type: airflow
+    dag_id: model_hot_water_heater_detection
+    task_id: hot_water_heater_12
+    format: parquet
+  - id: wh_results_79
+    type: airflow
+    dag_id: model_hot_water_heater_detection
+    task_id: hot_water_heater_79
+    format: parquet
+  - id: wh_results_109
+    type: airflow
+    dag_id: model_hot_water_heater_detection
+    task_id: hot_water_heater_109
+    format: parquet
+
+transform:
+  type: task
+  script: hw_union.py
+  task: hw_union.UnionModel
+
+load:
+  type: file
+  format: parquet

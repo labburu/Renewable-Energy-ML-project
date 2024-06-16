@@ -1,0 +1,45 @@
+---
+
+info:
+  id: transform_hwh_109
+
+extract:
+  - id: channels
+    type: airflow
+    dag_id: soa_daily
+    task_id: transform_channels
+    format: parquet
+  - id: locations
+    type: airflow
+    dag_id: soa_daily
+    task_id: transform_locations
+    format: parquet
+  - id: ws_ami
+    type: airflow
+    dag_id: model_electric_heat_detection
+    task_id: model_weather_sensitivity_ami
+    format: parquet
+  - id: experian
+    type: airflow
+    dag_id: demographics_matching_v2
+    task_id: transform_match_demographics
+    format: parquet
+  - id: location_profiles_tabular
+    type: airflow
+    dag_id: tendril
+    task_id: transform_location_profiles_tabular
+    format: parquet
+  - id: wh_score
+    type: airflow
+    dag_id: model_hot_water_heater_detection
+    task_id: hot_water_heater
+    format: parquet
+
+transform:
+  type: task
+  task: transform_hwh_109.TransformHWH
+  script: transform_hwh_109.py
+
+load:
+  type: file
+  format: parquet

@@ -1,0 +1,22 @@
+---
+
+info:
+  id: model_hwh_v2_other
+
+extract:
+  - id: munged_data
+    type: airflow
+    dag_id: model_hot_water_heater_detection
+    task_id: transform_hwh_other
+    format: parquet
+
+transform:
+  type: task
+  task: model_hwh_v2_other.ModelHWHv2
+  script: model_hwh_v2_other.py
+  report:
+    type: datadog
+
+load:
+  type: file
+  format: parquet

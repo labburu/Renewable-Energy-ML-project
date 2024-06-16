@@ -1,0 +1,17 @@
+---
+
+info:
+  id: extract_alabama_interval_common
+
+# This is defined in the operator. It has to contain `ami` and `linkage` sourced from the
+# JSON files we get from Alabama Power.
+extract: []
+
+transform:
+  type: task
+  task: extract_alabama_interval_common.ExtractAmiAlabama
+  script: extract_alabama_interval_common.py
+
+load:
+  type: file
+  format: parquet

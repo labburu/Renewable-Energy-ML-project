@@ -1,0 +1,21 @@
+---
+
+info:
+  id: transform_weather_sensitivity
+  owner: Joe Wofford
+
+extract:
+  - id: bill_weather_sensitivity
+    type: airflow
+    dag_id: models
+    task_id: model_weather_sensitivity
+    format: parquet
+
+transform:
+  type: task
+  task: transform_weather_sensitivity.TransformWeatherSensitivity
+  script: transform_weather_sensitivity.py
+
+load:
+  type: file
+  format: parquet

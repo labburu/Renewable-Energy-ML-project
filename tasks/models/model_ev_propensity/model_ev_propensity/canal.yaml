@@ -1,0 +1,22 @@
+---
+
+info:
+  id: model_ev_propensity
+
+extract:
+  - id: munged_data
+    type: airflow
+    dag_id: models
+    task_id: transform_ev_propensity
+    format: parquet
+
+transform:
+  type: task
+  task: task.ModelEVPropensity
+  script: task.py
+  report:
+    type: datadog
+
+load:
+  type: file
+  format: parquet

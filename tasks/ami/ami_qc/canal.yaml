@@ -1,0 +1,22 @@
+---
+
+info:
+  id: ami_qc
+  owner: AMI-GOs
+  email: beerd@tendrilinc.com
+
+extract:
+  - id: ami
+    type: airflow
+    dag_id: supply_this_in_the_dag
+    task_id: supply_this_in_the_dag
+
+transform:
+  type: task
+  script: ami_qc.py
+  task: ami_qc.Quality
+
+load:
+  type: file
+  format: parquet
+  repartition: 1

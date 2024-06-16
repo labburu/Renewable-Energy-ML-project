@@ -1,0 +1,19 @@
+---
+
+info:
+  id: extract_features
+
+extract:
+  - id: ami
+    type: file
+    static: ami_common
+    format: parquet
+
+transform:
+  type: task
+  script: extract_features.py
+  task: extract_features.ExtractFeatures
+
+load:
+  type: file
+  format: parquet

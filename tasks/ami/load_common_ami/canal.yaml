@@ -1,0 +1,15 @@
+---
+
+info:
+  id: load_common_ami
+
+# Extract block must be set in DAG to point to correct upstream task
+extract: []
+
+transform:
+  type: task
+  task: load_common_ami.LoadCommonAmi
+  script: load_common_ami.py
+
+# This script does all its load-ing inside LoadCommonAmi.run.
+load: []

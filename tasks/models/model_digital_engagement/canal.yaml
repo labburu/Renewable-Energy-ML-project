@@ -1,0 +1,19 @@
+---
+info:
+  id: model_digital_engagement
+  owner: Sahan Jayasumana
+  email: sjayasumana@tendrilinc.com
+
+extract:
+  - id: email_events
+    type: file
+    static: email_performance_destination
+    format: parquet
+
+transform:
+  type: script
+  script: script.py
+
+load:
+  type: file
+  format: parquet

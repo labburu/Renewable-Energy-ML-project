@@ -1,0 +1,27 @@
+---
+
+info:
+  id: train_models
+
+extract:
+  - id: training
+    type: airflow
+    dag_id: model_ev_detection
+    task_id: generate_training_set
+    format: parquet
+  - id: locations
+    type: airflow
+    dag_id: soa_daily
+    task_id: transform_locations
+    format: parquet
+
+transform:
+  type: task
+  script: train_model.py
+  task: train_model.TrainModel
+  report:
+    type: datadog
+
+load:
+  type: file
+  format: parquet

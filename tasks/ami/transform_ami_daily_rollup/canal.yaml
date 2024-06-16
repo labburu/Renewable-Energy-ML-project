@@ -1,0 +1,20 @@
+---
+
+info:
+  id: transform_ami_daily_rollup
+  owner: BEE RD Team
+  email: beerd@tendrilinc.com
+
+# Tenant-specific extract set in DAG
+extract: []
+
+transform:
+  type: task
+  script: transform_ami_daily_rollup.py
+  task: transform_ami_daily_rollup.Transform
+
+# Output is metadata channels and date/time ranges processed
+load:
+  type: file
+  format: parquet
+  repartition: 1

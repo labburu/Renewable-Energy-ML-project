@@ -1,0 +1,19 @@
+---
+
+info:
+  id: load_ami_mdis_months
+  owner: BEE RD Team
+  email: beerd@tendrilinc.com
+
+# Tenant-specific extract must be set in dag
+extract: []
+
+transform:
+  type: task
+  script: load_ami_mdis_months.py
+  task: load_ami_mdis_months.Load
+
+load:
+  type: file
+  format: parquet
+  repartition: 1

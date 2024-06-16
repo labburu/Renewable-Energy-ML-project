@@ -1,0 +1,25 @@
+---
+
+info:
+  id: model_green_energy_propensity
+  owner: Ihno
+  email: ilee@tendrilinc.com
+
+extract:
+  - id: joined_experian
+    type: airflow
+    dag_id: demographics_matching
+    task_id: join_locations_to_matched_experian
+    format: parquet
+
+transform:
+  type: task
+  script: task.py
+  task: task.GetGreenEnergyProp
+  report:
+    type: datadog
+
+
+load:
+  type: file
+  format: parquet

@@ -1,0 +1,24 @@
+---
+
+info:
+  id: hot_water_heater
+
+extract:
+  - id: ami
+    type: file
+    static: ami_hourly_rollup
+    format: parquet
+  - id: channels
+    type: airflow
+    dag_id: soa_daily
+    task_id: transform_channels
+    format: parquet
+
+transform:
+  type: task
+  script: hot_water_heater.py
+  task: hot_water_heater.HotWHModel
+
+load:
+  type: file
+  format: parquet

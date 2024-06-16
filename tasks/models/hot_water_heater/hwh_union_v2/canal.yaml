@@ -1,0 +1,25 @@
+---
+
+info:
+  id: hwh_union_v2
+
+extract:
+  - id: wh_results_other
+    type: airflow
+    dag_id: model_hot_water_heater_detection
+    task_id: model_hwh_v2_other
+    format: parquet
+  - id: wh_results_109
+    type: airflow
+    dag_id: model_hot_water_heater_detection
+    task_id: model_hwh_v2_109
+    format: parquet
+
+transform:
+  type: task
+  script: hw_union.py
+  task: hw_union.UnionModel
+
+load:
+  type: file
+  format: parquet

@@ -1,0 +1,55 @@
+---
+
+info:
+  id: run_models
+
+extract:
+  - id: features_11
+    type: airflow
+    dag_id: model_ev_detection
+    task_id: extract_features_11
+    format: parquet
+  - id: features_12
+    type: airflow
+    dag_id: model_ev_detection
+    task_id: extract_features_12
+    format: parquet
+  - id: features_79
+    type: airflow
+    dag_id: model_ev_detection
+    task_id: extract_features_79
+    format: parquet
+  - id: features_109
+    type: airflow
+    dag_id: model_ev_detection
+    task_id: extract_features_109
+    format: parquet
+  - id: channels
+    type: airflow
+    dag_id: soa_daily
+    task_id: transform_channels
+    format: parquet
+  - id: locations
+    type: airflow
+    dag_id: soa_daily
+    task_id: transform_locations
+    format: parquet
+  - id: location_profiles_tabular
+    type: airflow
+    dag_id: tendril
+    task_id: transform_location_profiles_tabular
+    format: parquet
+  - id: experian
+    type: airflow
+    dag_id: demographics_matching_v2
+    task_id: transform_match_demographics
+    format: parquet
+
+transform:
+  type: task
+  script: run_models.py
+  task: run_models.RunModels
+
+load:
+  type: file
+  format: parquet

@@ -1,0 +1,28 @@
+---
+
+info:
+  id: extract_common_ami
+
+extract:
+  - id: ami
+    type: file
+    format: csv
+  - id: channels
+    type: airflow
+    dag_id: supply_this_in_the_dag
+    task_id: supply_this_in_the_dag
+  - id: ingest_errors
+    type: airflow
+    dag_id: supply_this_in_the_dag
+    task_id: supply_this_in_the_dag
+
+transform:
+  type: task
+  task: extract_common_ami.ExtractCommonAmi
+  script: extract_common_ami.py
+  report:
+    type: datadog
+
+load:
+  type: file
+  format: parquet

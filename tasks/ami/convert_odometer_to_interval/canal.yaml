@@ -1,0 +1,15 @@
+---
+
+info:
+  id: convert_odometer_to_interval
+
+extract: []
+
+transform:
+  type: task
+  task: convert_odometer_to_interval.ConvertOdometerToInterval
+  script: convert_odometer_to_interval.py
+
+load:
+  type: file
+  format: parquet

@@ -1,0 +1,19 @@
+---
+
+info:
+  id: extract_ami_duke
+
+extract:
+  - id: ami
+    type: file
+    static: raw_ami_duke
+    format: csv
+
+transform:
+  type: task
+  task: extract_ami_duke.ExtractAmiDuke
+  script: extract_ami_duke.py
+
+load:
+  type: file
+  format: parquet

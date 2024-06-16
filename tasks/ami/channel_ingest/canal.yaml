@@ -1,0 +1,44 @@
+---
+
+info:
+  id: channel_ingest
+  owner: AMI-GOs
+  email: beerd@tendrilinc.com
+
+extract:
+  - id: channels
+    type: airflow
+    dag_id: soa_daily
+    task_id: transform_channels
+    format: parquet
+  - id: locations
+    type: airflow
+    dag_id: soa_daily
+    task_id: transform_locations
+    format: parquet
+  - id: accounts
+    type: airflow
+    dag_id: soa_daily
+    task_id: transform_accounts
+    format: parquet
+  - id: hub_ids
+    type: airflow
+    dag_id: soa_daily
+    task_id: transform_account_hub_id
+    format: parquet
+  - id: ami
+    type: file
+    static: raw_ami_duke
+    format: csv
+
+transform:
+  type: task
+  script: channel_ingest.py
+  task: channel_ingest.ChannelIngest
+  report:
+    type: datadog
+
+load:
+  type: file
+  format: parquet
+  repartition: 1

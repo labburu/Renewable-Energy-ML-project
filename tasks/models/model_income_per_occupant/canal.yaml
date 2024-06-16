@@ -1,0 +1,20 @@
+---
+
+info:
+  id: model_income_per_occupant
+
+extract:
+  - id: demogs
+    type: airflow
+    dag_id: tendril
+    task_id: transform_merge_demographics
+    format: parquet
+
+transform:
+  type: task
+  script: income_per_occupant.py
+  task: income_per_occupant.ModelIncomePerOccupant
+
+load:
+  type: file
+  format: parquet

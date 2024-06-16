@@ -1,0 +1,10 @@
+pyspark==2.4.3
+findspark==1.4.2
+spark-jsonapi==1.0.1
+py4j==0.10.7
+importlib-metadata==1.6.0
+pytest>=2.5.2
+pandas<2.0,>=0.17.1
+zipp>=0.5
+mock==3.0.5
+flake8==3.7.8

@@ -1,0 +1,29 @@
+---
+
+info:
+  id: model_tou_propensity
+  owner: Ihno
+  email: ilee@tendrilinc.com
+
+extract:
+  - id: experian_normalized
+    type: airflow
+    dag_id: demographics_matching
+    task_id: transform_normalize_experian
+    format: parquet
+  - id: ev
+    type: airflow
+    dag_id: models
+    task_id: model_ev_propensity
+    format: parquet
+
+transform:
+  type: task
+  script: task.py
+  task: task.GetTOUProp
+  report:
+    type: datadog
+
+load:
+  type: file
+  format: parquet
