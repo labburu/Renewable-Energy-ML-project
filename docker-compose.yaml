@@ -1,0 +1,13 @@
+---
+
+version: '3'
+
+services:
+  local-jenkins-airflow-slave:
+    container_name: local-jenkins-airflow-slave
+    image: registro.tendrilinc.com/jenkins-pyspark:20200726
+    volumes:
+      - .:/usr/local/airflow/
+    entrypoint: /usr/local/airflow/scripts/build.sh
+    environment:
+      - AIRFLOW_HOME=/usr/local/airflow/
